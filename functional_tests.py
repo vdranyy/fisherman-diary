@@ -18,32 +18,46 @@ class NewVisitorTestCase(unittest.TestCase):
         # He want to see date of fishing, and text area to make notes like
         # in diary.
 
-
         # Bob has heard about cool new diary for fisherman. He goes to its site to check it out
-
         self.browser.get('http://localhost:8000')
 
         # He notices the page title 'Fisherman Diary'
-
         self.assertIn('Fisherman Diary', self.browser.title)
-        self.fail('Incomplete test')
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('Fisherman Diary', header_text)
 
         # He is invited to enter a new note in diary
+        form_note = self.browser.find_element_by_id('id_form_note')
+        title = self.browser.find_element_by_id('id_new_title')
+        self.assertEqual(title.get_attribute('placeholder'), 'Enter a title')
+        date = self.browser.find_element_by_id('id_new_date')
+        self.assertEqual(date.get_attribute('placeholder'), 'Enter a date')
+        note = self.browser.find_element_by_id('id_new_note')
+        self.assertEqual(note.get_attribute('placeholder'), 'Enter a note')
 
-
-        # He types 'Today was a good day to fishing. I has catch five trouts and one harius.
-        # The weather was cloudly, temperture 20 degree per celcium. Wind was from west.' to
+        # He types 'Today was a good day to fishing. I had catch five trouts and one harius.
+        # The weather was cloudly, temperature 20 degree per celcium. West wind.' to
         # the text field.
         # He types 'Fishing near Havrontsy' to the title text field.
         # Bob enters date of fishing '21.04.2015'
+        title.send_keys('Fishing near Havrontsy')
+        date.send_keys('21.04.2015')
+        text = 'Today was a good day to fishing. I had catch five trouts and one harius. The weather was cloudly, temperature 20 degree per celcium. West wind.'
+        note.send_keys(text)
 
         # When he press button 'Save', the page updates and now the page list contains 
         # '21.04.2015: Fishing near Havrontsy'.
+        button = self.browser.find_element_by_id('id_save_button')
+        button.click()
 
+        table = self.browser.find_element_by_id('id_notes_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertTrue(any(row.text == '21.04.2015 Fishing near Havrontsy' for row in rows))
 
         # There is still a form that inviting to add one more note. He enters
         # 'Fishing was awesome. Many many trouts was catched throughout 2 hours.'
         # Title 'Wild trout', date '05.06.2015'
+        self.fail('Incomplete test')
 
 
         # The page updates again, and now shows both notes on the page.
