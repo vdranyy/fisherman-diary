@@ -19,13 +19,22 @@ class NewVisitorTestCase(StaticLiveServerTestCase):
 		# he can try it out he must register and log in. 
 		# Bob visits the main page of our site.
 		self.browser.get(self.live_server_url + '/')
-		self.fail('incomplete test')
 		
-		# He seeing the form to log in and the link Register
+		# He seeing the link to log in and the link Register
 		# on the page. He press the link and he goes to registration
 		# page. He enters his username, password and confirm password.
 		# After that he press Register button in the bottom of the
 		# form.
+		self.browser.find_element_by_id('id_registration').click()
+		self.browser.find_element_by_id('id_login_form')
+		username = self.find_element_by_id('id_username')
+		username.send_keys('fisherman-bob')
+		password1 = self.browser.find_element_by_id('id_password1')
+		password1.send_keys('BoBfish23')
+		password2 = self.browser.find_element_by_id('id_password2')
+		password2.send_keys('BoBfish23')
+		self.browser.find_element_by_tag_name('button').submit()
+		self.fail('incomplete test')
 		
 		
 		# He seeing message that says that Bob is successfuly
@@ -33,7 +42,7 @@ class NewVisitorTestCase(StaticLiveServerTestCase):
 		# in the top left corner of the screen. He on the main
 		# page.
 
-	    
+"""
 	def test_can_start_a_note_and_retrieve_it_later(self):
         
 		# Bob is a fisherman. He often goes fishing and he want's to
@@ -91,5 +100,5 @@ class NewVisitorTestCase(StaticLiveServerTestCase):
 		# explanatory text to that effect.
 		# He visits that URL - his diary notes is still there.
 		# Satisfied, he goes back to sleep.
-		
+"""
 

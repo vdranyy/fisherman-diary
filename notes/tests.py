@@ -13,6 +13,4 @@ class HomePageTestCase(TestCase):
     def test_home_page_returns_correct_html(self):
         request = HttpRequest()
         response = home_page(request)
-        self.assertTrue(response.content.startswith(b'<html>'))
         self.assertIn(b'<title>Fisherman Diary</title>', response.content)
-        self.assertTrue(response.content.endswith(b'</html>'))

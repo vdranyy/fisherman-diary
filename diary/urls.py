@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from registration import urls as registration
 
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
+	url(r'^registration/', include(registration, namespace="registration")),
     url(r'^$', 'notes.views.home_page', name='home_page'),
 ]
