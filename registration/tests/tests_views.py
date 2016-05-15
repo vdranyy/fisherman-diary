@@ -1,3 +1,4 @@
+from django.http import HttpRequest
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 from registration.views import registration
@@ -26,3 +27,35 @@ class ViewsTestCase(TestCase):
 		response = self.client.get('/registration/registration/')
 		self.assertIs(type(response.context['form']), RegistrationForm)
 	
+	def test_registration_view_can_save_post_request(self):	
+		"""
+		Test that registration view can save a POST request
+		"""
+		request = HttpRequest()
+		request.method = 'POST'
+		request.POST['user'] = User.objects.create(username='fisherman-bob', password='BoBfish23')
+		response = registration(request)
+		
+		self.assertEqual(User.objects.count(), 1)
+		user = User.objects.first()
+		self.assertEqual(user.username, 'fisherman-bob')
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(response['location'], '/registration/register-complete/')
+
+	def test_registration_view_saves_user_only_if_user_is_valid(self):
+		"""
+		Test that user can be save only if user data is valid
+		"""
+		request = HttpRequest()
+		registration(request)
+		self.assertEqual(User.objects.count(), 0)
+
+
+	#def test_registration_view_redirects_after_saving_user(self):
+		"""
+		Test that registration view redirects to confirmation
+		page after saving user
+		"""
+		#request = HttpRequest()
+		#response = registration(request)
+

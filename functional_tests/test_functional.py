@@ -18,7 +18,7 @@ class NewVisitorTestCase(StaticLiveServerTestCase):
 		# he wants to try out this diary. But before
 		# he can try it out he must register and log in. 
 		# Bob visits the main page of our site.
-		self.browser.get(self.live_server_url + '/')
+		main_page = self.browser.get(self.live_server_url + '/')
 		
 		# He seeing the link to log in and the link Register
 		# on the page. He press the link and he goes to registration
@@ -34,13 +34,20 @@ class NewVisitorTestCase(StaticLiveServerTestCase):
 		password2 = self.browser.find_element_by_id('id_password2')
 		password2.send_keys('BoBfish23')
 		self.browser.find_element_by_tag_name('button').submit()
-		self.fail('incomplete test')
 		
 		
 		# He seeing message that says that Bob is successfuly
-		# register on Diary site. He press logo of the site
-		# in the top left corner of the screen. He on the main
-		# page.
+		# register on Diary site. He sees link "Make new post"
+		# and link "Go to Diary" rigth after message of registration.
+		# Bob goes to main page.
+		#self.browser.get(self.live_server_url + '/registration/register-complete/')
+		text_message = self.browser.find_element_by_tag_name('p')
+		self.assertEqual(text_message, 'You are successfuly register on Fisherman Diary!')
+		main_page_link = self.browser.find_element_by_link_text('Go to Diary')
+		self.assertEqual(main_page_link, 'Go to Diary')
+		main_page_link.click()
+		self.assertEqual(main_page, self.live_server_url + '/')
+		self.fail('incomplete test')
 
 """
 	def test_can_start_a_note_and_retrieve_it_later(self):
