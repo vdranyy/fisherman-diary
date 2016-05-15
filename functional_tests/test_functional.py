@@ -27,7 +27,7 @@ class NewVisitorTestCase(StaticLiveServerTestCase):
 		# form.
 		self.browser.find_element_by_id('id_registration').click()
 		self.browser.find_element_by_id('id_login_form')
-		username = self.find_element_by_id('id_username')
+		username = self.browser.find_element_by_id('id_username')
 		username.send_keys('fisherman-bob')
 		password1 = self.browser.find_element_by_id('id_password1')
 		password1.send_keys('BoBfish23')

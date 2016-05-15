@@ -4,7 +4,10 @@
 	<title>Fisherman Diary</title>
 </head>
 <body>
-	<a href="#" id="id_login">Login</a>
-	<a href="{% url 'registration:registration' %}" id="id_registration">Registration</a>
+	<div>
+		<a href="#" id="id_login">Login</a>
+		<a href="{% url 'registration:registration' %}" id="id_registration">Registration</a>
+	</div>
+	{% block content %}{% endblock %}
 </body>
 </html>
