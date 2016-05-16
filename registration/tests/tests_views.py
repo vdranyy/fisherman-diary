@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
-from registration.views import registration
+from registration.views import registration, register_complete
 from registration.forms import RegistrationForm
 
 
@@ -58,4 +58,14 @@ class ViewsTestCase(TestCase):
 		"""
 		#request = HttpRequest()
 		#response = registration(request)
+
+	def test_register_complete_view_basic(self):
+		"""
+		Test that register_complete view returns a 200 responce
+		and uses correct template
+		"""
+		request = self.factory.get('/registration/register-complete/')
+		with self.assertTemplateUsed('registration/register_complete.html'):
+			response = register_complete(request)
+			self.assertEqual(response.status_code, 200)
 

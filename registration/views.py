@@ -9,10 +9,14 @@ def registration(request):
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
 			username = form.cleaned_data['username']
-			password = form.cleaned_data['password']
+			password = form.clean_password()
 			User.objects.create(username=username, password=password)
 		return redirect('/registration/register-complete/')
 	else:
 		form = RegistrationForm()
 	context = {'form': form}
 	return render(request, 'registration/registration.html', context)
+
+
+def register_complete(request):
+	return render(request, 'registration/register_complete.html')
