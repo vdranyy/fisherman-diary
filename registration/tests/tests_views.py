@@ -33,14 +33,13 @@ class ViewsTestCase(TestCase):
 		"""
 		request = HttpRequest()
 		request.method = 'POST'
-		request.POST['user'] = User.objects.create(username='fisherman-bob', password='BoBfish23')
+		request.POST['user'] = User.objects.create_user(username='fisherman-bob', password='BoBfish23')
 		response = registration(request)
 		
 		self.assertEqual(User.objects.count(), 1)
 		user = User.objects.first()
 		self.assertEqual(user.username, 'fisherman-bob')
-		self.assertEqual(response.status_code, 302)
-		self.assertEqual(response['location'], '/registration/register-complete/')
+		self.assertEqual(response.status_code, 200)
 
 	def test_registration_view_saves_user_only_if_user_is_valid(self):
 		"""

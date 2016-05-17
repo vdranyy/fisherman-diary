@@ -47,6 +47,11 @@ class NewVisitorTestCase(StaticLiveServerTestCase):
 		main_page_link = self.browser.find_element_by_link_text('Go to Diary')
 		self.assertEqual(main_page_link.text, 'Go to Diary')
 		main_page_link.click()
+		# Bob is login to Fisherman Diary right after registration.
+		# He knows that because he see his username in top right
+		# corner of the screen.
+		username_link = self.browser.find_element_by_id('auth_username')
+		self.assertEqual(username_link.text, 'fisherman-bob')
 
 """
 	def test_can_start_a_note_and_retrieve_it_later(self):
